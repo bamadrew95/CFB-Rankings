@@ -1,0 +1,956 @@
+[
+    {
+        "id": 2005,
+        "team": "Air Force",
+        "classification": "fbs",
+        "conference": "Mountain West"
+    },
+    {
+        "id": 2006,
+        "team": "Akron",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 333,
+        "team": "Alabama",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 2026,
+        "team": "Appalachian State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 12,
+        "team": "Arizona",
+        "classification": "fbs",
+        "conference": "Pac-10"
+    },
+    {
+        "id": 9,
+        "team": "Arizona State",
+        "classification": "fbs",
+        "conference": "Pac-10"
+    },
+    {
+        "id": 8,
+        "team": "Arkansas",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 2032,
+        "team": "Arkansas State",
+        "classification": "fbs",
+        "conference": "Sun Belt"
+    },
+    {
+        "id": 349,
+        "team": "Army",
+        "classification": "fbs",
+        "conference": "Conference USA"
+    },
+    {
+        "id": 2,
+        "team": "Auburn",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 2050,
+        "team": "Ball State",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 239,
+        "team": "Baylor",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 68,
+        "team": "Boise State",
+        "classification": "fbs",
+        "conference": "Western Athletic"
+    },
+    {
+        "id": 103,
+        "team": "Boston College",
+        "classification": "fbs",
+        "conference": "Big East"
+    },
+    {
+        "id": 189,
+        "team": "Bowling Green",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 2083,
+        "team": "Bucknell",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2084,
+        "team": "Buffalo",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 252,
+        "team": "BYU",
+        "classification": "fbs",
+        "conference": "Mountain West"
+    },
+    {
+        "id": 25,
+        "team": "California",
+        "classification": "fbs",
+        "conference": "Pac-10"
+    },
+    {
+        "id": 2117,
+        "team": "Central Michigan",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 236,
+        "team": "Chattanooga",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2132,
+        "team": "Cincinnati",
+        "classification": "fbs",
+        "conference": "Conference USA"
+    },
+    {
+        "id": 228,
+        "team": "Clemson",
+        "classification": "fbs",
+        "conference": "ACC"
+    },
+    {
+        "id": 38,
+        "team": "Colorado",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 36,
+        "team": "Colorado State",
+        "classification": "fbs",
+        "conference": "Mountain West"
+    },
+    {
+        "id": 41,
+        "team": "Connecticut",
+        "classification": "fbs",
+        "conference": "FBS Independents"
+    },
+    {
+        "id": 150,
+        "team": "Duke",
+        "classification": "fbs",
+        "conference": "ACC"
+    },
+    {
+        "id": 151,
+        "team": "East Carolina",
+        "classification": "fbs",
+        "conference": "Conference USA"
+    },
+    {
+        "id": 2197,
+        "team": "Eastern Illinois",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2198,
+        "team": "Eastern Kentucky",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2199,
+        "team": "Eastern Michigan",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 331,
+        "team": "Eastern Washington",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2193,
+        "team": "East Tennessee State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 57,
+        "team": "Florida",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 52,
+        "team": "Florida State",
+        "classification": "fbs",
+        "conference": "ACC"
+    },
+    {
+        "id": 278,
+        "team": "Fresno State",
+        "classification": "fbs",
+        "conference": "Western Athletic"
+    },
+    {
+        "id": 231,
+        "team": "Furman",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 61,
+        "team": "Georgia",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 59,
+        "team": "Georgia Tech",
+        "classification": "fbs",
+        "conference": "ACC"
+    },
+    {
+        "id": 62,
+        "team": "Hawai'i",
+        "classification": "fbs",
+        "conference": "Western Athletic"
+    },
+    {
+        "id": 248,
+        "team": "Houston",
+        "classification": "fbs",
+        "conference": "Conference USA"
+    },
+    {
+        "id": 70,
+        "team": "Idaho",
+        "classification": "fbs",
+        "conference": "Sun Belt"
+    },
+    {
+        "id": 304,
+        "team": "Idaho State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 356,
+        "team": "Illinois",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 2287,
+        "team": "Illinois State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 84,
+        "team": "Indiana",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 282,
+        "team": "Indiana State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2294,
+        "team": "Iowa",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 66,
+        "team": "Iowa State",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 55,
+        "team": "Jacksonville State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2305,
+        "team": "Kansas",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 2306,
+        "team": "Kansas State",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 2309,
+        "team": "Kent State",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 96,
+        "team": "Kentucky",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 2335,
+        "team": "Liberty",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 309,
+        "team": "Louisiana",
+        "classification": "fbs",
+        "conference": "Sun Belt"
+    },
+    {
+        "id": 2433,
+        "team": "Louisiana Monroe",
+        "classification": "fbs",
+        "conference": "Sun Belt"
+    },
+    {
+        "id": 2348,
+        "team": "Louisiana Tech",
+        "classification": "fbs",
+        "conference": "Western Athletic"
+    },
+    {
+        "id": 97,
+        "team": "Louisville",
+        "classification": "fbs",
+        "conference": "Conference USA"
+    },
+    {
+        "id": 99,
+        "team": "LSU",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 276,
+        "team": "Marshall",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 120,
+        "team": "Maryland",
+        "classification": "fbs",
+        "conference": "ACC"
+    },
+    {
+        "id": 2377,
+        "team": "McNeese",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 235,
+        "team": "Memphis",
+        "classification": "fbs",
+        "conference": "Conference USA"
+    },
+    {
+        "id": 2390,
+        "team": "Miami",
+        "classification": "fbs",
+        "conference": "Big East"
+    },
+    {
+        "id": 193,
+        "team": "Miami (OH)",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 130,
+        "team": "Michigan",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 127,
+        "team": "Michigan State",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 2393,
+        "team": "Middle Tennessee",
+        "classification": "fbs",
+        "conference": "Sun Belt"
+    },
+    {
+        "id": 135,
+        "team": "Minnesota",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 344,
+        "team": "Mississippi State",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 142,
+        "team": "Missouri",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 2623,
+        "team": "Missouri State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 149,
+        "team": "Montana",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 147,
+        "team": "Montana State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 93,
+        "team": "Murray State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2426,
+        "team": "Navy",
+        "classification": "fbs",
+        "conference": "FBS Independents"
+    },
+    {
+        "id": 152,
+        "team": "NC State",
+        "classification": "fbs",
+        "conference": "ACC"
+    },
+    {
+        "id": 158,
+        "team": "Nebraska",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 2440,
+        "team": "Nevada",
+        "classification": "fbs",
+        "conference": "Western Athletic"
+    },
+    {
+        "id": 167,
+        "team": "New Mexico",
+        "classification": "fbs",
+        "conference": "Mountain West"
+    },
+    {
+        "id": 166,
+        "team": "New Mexico State",
+        "classification": "fbs",
+        "conference": "Sun Belt"
+    },
+    {
+        "id": 2447,
+        "team": "Nicholls",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 153,
+        "team": "North Carolina",
+        "classification": "fbs",
+        "conference": "ACC"
+    },
+    {
+        "id": 2464,
+        "team": "Northern Arizona",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2459,
+        "team": "Northern Illinois",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 2460,
+        "team": "Northern Iowa",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 249,
+        "team": "North Texas",
+        "classification": "fbs",
+        "conference": "Sun Belt"
+    },
+    {
+        "id": 77,
+        "team": "Northwestern",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 2466,
+        "team": "Northwestern State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 87,
+        "team": "Notre Dame",
+        "classification": "fbs",
+        "conference": "FBS Independents"
+    },
+    {
+        "id": 195,
+        "team": "Ohio",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 194,
+        "team": "Ohio State",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 201,
+        "team": "Oklahoma",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 197,
+        "team": "Oklahoma State",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 145,
+        "team": "Ole Miss",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 2483,
+        "team": "Oregon",
+        "classification": "fbs",
+        "conference": "Pac-10"
+    },
+    {
+        "id": 204,
+        "team": "Oregon State",
+        "classification": "fbs",
+        "conference": "Pac-10"
+    },
+    {
+        "id": 213,
+        "team": "Penn State",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 221,
+        "team": "Pittsburgh",
+        "classification": "fbs",
+        "conference": "Big East"
+    },
+    {
+        "id": 2509,
+        "team": "Purdue",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 242,
+        "team": "Rice",
+        "classification": "fbs",
+        "conference": "Western Athletic"
+    },
+    {
+        "id": 257,
+        "team": "Richmond",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 164,
+        "team": "Rutgers",
+        "classification": "fbs",
+        "conference": "Big East"
+    },
+    {
+        "id": 2534,
+        "team": "Sam Houston State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 21,
+        "team": "San Diego State",
+        "classification": "fbs",
+        "conference": "Mountain West"
+    },
+    {
+        "id": 23,
+        "team": "San Jos\u00e9 State",
+        "classification": "fbs",
+        "conference": "Western Athletic"
+    },
+    {
+        "id": 2567,
+        "team": "SMU",
+        "classification": "fbs",
+        "conference": "Western Athletic"
+    },
+    {
+        "id": 2579,
+        "team": "South Carolina",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 2546,
+        "team": "Southeast Missouri State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2582,
+        "team": "Southern",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 79,
+        "team": "Southern Illinois",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2572,
+        "team": "Southern Mississippi",
+        "classification": "fbs",
+        "conference": "Conference USA"
+    },
+    {
+        "id": 253,
+        "team": "Southern Utah",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 58,
+        "team": "South Florida",
+        "classification": "fbs",
+        "conference": "FBS Independents"
+    },
+    {
+        "id": 24,
+        "team": "Stanford",
+        "classification": "fbs",
+        "conference": "Pac-10"
+    },
+    {
+        "id": 2617,
+        "team": "Stephen F. Austin",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 183,
+        "team": "Syracuse",
+        "classification": "fbs",
+        "conference": "Big East"
+    },
+    {
+        "id": 2628,
+        "team": "TCU",
+        "classification": "fbs",
+        "conference": "Conference USA"
+    },
+    {
+        "id": 218,
+        "team": "Temple",
+        "classification": "fbs",
+        "conference": "Big East"
+    },
+    {
+        "id": 2633,
+        "team": "Tennessee",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 2635,
+        "team": "Tennessee Tech",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 251,
+        "team": "Texas",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 245,
+        "team": "Texas A&M",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 2640,
+        "team": "Texas Southern",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 326,
+        "team": "Texas State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2641,
+        "team": "Texas Tech",
+        "classification": "fbs",
+        "conference": "Big 12"
+    },
+    {
+        "id": 2643,
+        "team": "The Citadel",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2649,
+        "team": "Toledo",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 2653,
+        "team": "Troy",
+        "classification": "fbs",
+        "conference": "FBS Independents"
+    },
+    {
+        "id": 2655,
+        "team": "Tulane",
+        "classification": "fbs",
+        "conference": "Conference USA"
+    },
+    {
+        "id": 202,
+        "team": "Tulsa",
+        "classification": "fbs",
+        "conference": "Western Athletic"
+    },
+    {
+        "id": 5,
+        "team": "UAB",
+        "classification": "fbs",
+        "conference": "Conference USA"
+    },
+    {
+        "id": 2116,
+        "team": "UCF",
+        "classification": "fbs",
+        "conference": "FBS Independents"
+    },
+    {
+        "id": 26,
+        "team": "UCLA",
+        "classification": "fbs",
+        "conference": "Pac-10"
+    },
+    {
+        "id": 113,
+        "team": "UMass",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2439,
+        "team": "UNLV",
+        "classification": "fbs",
+        "conference": "Mountain West"
+    },
+    {
+        "id": 30,
+        "team": "USC",
+        "classification": "fbs",
+        "conference": "Pac-10"
+    },
+    {
+        "id": 254,
+        "team": "Utah",
+        "classification": "fbs",
+        "conference": "Mountain West"
+    },
+    {
+        "id": 328,
+        "team": "Utah State",
+        "classification": "fbs",
+        "conference": "FBS Independents"
+    },
+    {
+        "id": 2638,
+        "team": "UTEP",
+        "classification": "fbs",
+        "conference": "Western Athletic"
+    },
+    {
+        "id": 238,
+        "team": "Vanderbilt",
+        "classification": "fbs",
+        "conference": "SEC"
+    },
+    {
+        "id": 258,
+        "team": "Virginia",
+        "classification": "fbs",
+        "conference": "ACC"
+    },
+    {
+        "id": 259,
+        "team": "Virginia Tech",
+        "classification": "fbs",
+        "conference": "Big East"
+    },
+    {
+        "id": 154,
+        "team": "Wake Forest",
+        "classification": "fbs",
+        "conference": "ACC"
+    },
+    {
+        "id": 264,
+        "team": "Washington",
+        "classification": "fbs",
+        "conference": "Pac-10"
+    },
+    {
+        "id": 265,
+        "team": "Washington State",
+        "classification": "fbs",
+        "conference": "Pac-10"
+    },
+    {
+        "id": 2692,
+        "team": "Weber State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2717,
+        "team": "Western Carolina",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2710,
+        "team": "Western Illinois",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 98,
+        "team": "Western Kentucky",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2711,
+        "team": "Western Michigan",
+        "classification": "fbs",
+        "conference": "Mid-American"
+    },
+    {
+        "id": 277,
+        "team": "West Virginia",
+        "classification": "fbs",
+        "conference": "Big East"
+    },
+    {
+        "id": 2729,
+        "team": "William & Mary",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 275,
+        "team": "Wisconsin",
+        "classification": "fbs",
+        "conference": "Big Ten"
+    },
+    {
+        "id": 2747,
+        "team": "Wofford",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 2751,
+        "team": "Wyoming",
+        "classification": "fbs",
+        "conference": "Mountain West"
+    },
+    {
+        "id": 2754,
+        "team": "Youngstown State",
+        "classification": null,
+        "conference": null
+    },
+    {
+        "id": 1000887,
+        "team": "Cal State Northridge",
+        "classification": null,
+        "conference": null
+    }
+]
