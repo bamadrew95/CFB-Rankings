@@ -1,5 +1,7 @@
 import json
+import pandas as pd
 from config import year, Team, Game
+from pprint import pprint
 
 class CompileRatings:
   def __init__(self, week_to_calc, postseason):
@@ -11,8 +13,9 @@ class CompileRatings:
     # Run methods
     self.open_files()
     self.create_teams()
-    self.calc_ratings()
-    # self.test()
+    self.create_sched_df()
+    self.create_ratings_df()
+    self.calculate_ratings()
 
 ###################### DEFINE METHODS ######################
   def open_files(self):
@@ -22,11 +25,11 @@ class CompileRatings:
 # Instantiate teams
   def create_teams(self):
     for team_data in self.teams_json_data:
-      team_sched = self.create_schedule(team_data)
-      team = Team(team_data['id'], team_data['team'], team_data['classification'], team_data['conference'], team_sched)
+      team_schedule = self.create_schedule(team_data)
+      team = Team(team_data['id'], team_data['team'], team_data['classification'], team_data['conference'], team_schedule)
       self.teams.append(team)
 
-  # Compile list of game objs for each team schudule
+    # Compile list of game objs for each team schudule
   def create_schedule(self, team_data):
     team_schedule = []
     reg_season_games = team_data['reg_game_data']
@@ -39,56 +42,110 @@ class CompileRatings:
       game_obj = Game(post_game['game_id'], post_game['week'], post_game['opp_id'], post_game['opp'], post_game['team_score'], post_game['opp_score'], post_game['result'], post_game['loc'], post_game['season_type'])
       team_schedule.append(game_obj)
     return team_schedule
+
+  def create_sched_df(self) -> pd.DataFrame():
+    """
+    Returns:
+      dataframe: 
+    """
+    for team in self.teams:
+      # print(vars(team.sched))
+      game_list = []
+      for game_obj in team.sched:
+        game_dict = {}
+        if game_obj.week <= self.week and game_obj.season_type != 'postseason':
+          self._add_game(game_dict, game_obj, game_list, team)
+        if self.post and game_obj.season_type == 'postseason':
+          self._add_game(game_dict, game_obj, game_list, team)
+
+      # Create a dataframe for each team's schedule
+      df = pd.DataFrame(game_list)
+      df['margin'] = df['team_score'] - df['opp_score']
+      team.sched_df = df
   
-  def calc_ratings(self):
-    for x in range(self.week):
-      for y in range(2000):
-        for team_data in self.teams:
-          for game_data in team_data.sched:
-            if game_data.week == x:
-              self.calc_game_result(game_data, team_data)
+  # Add game and all pertinent info to game_dict and append to game_list
+  def _add_game(self, game_dict, game_obj, game_list, team_obj):
+    game_dict['team_id'] = team_obj.team_id
+    game_dict['opp_id'] = game_obj.opp_id
+    game_dict['team_score'] = game_obj.team_score
+    game_dict['opp_score'] = game_obj.opp_score
+    game_dict['location'] = game_obj.location
+    game_list.append(game_dict)
 
-  def calc_game_result(self, game_data, team_data):
-    if game_data.game_id != None:
-      margin = self.calc_margin(game_data)
-      opp_rat = self.find_opp_rat(game_data)
-      elo_adj = self.calc_elo_adj(team_data.current_rating, opp_rat, margin)
-      self.adj_rating(elo_adj, team_data)
+  def create_ratings_df(self):
+    """
+    Create DataFrame that contains only team ratings, column names are Team IDs
+    """
+    column_ids = []
+    team_ratings = []
+    for team in self.teams:
+      column_ids.append(team.team_id)
+      team_ratings.append(team.initial_rating)
+      
+    df = pd.DataFrame([team_ratings], columns=column_ids)
+    df[0] = 0
 
-  def calc_margin(self, game_data):
-    margin = game_data.team_score - game_data.opp_score
-    return margin
+    self.team_ratings_df = df
 
-  def find_opp_rat(self, game_data):   
-    for team_data in self.teams:
-      if hasattr(team_data, 'current_rating') == False:
-        team_data.current_rating = team_data.initial_rating
 
-      if team_data.team_id == game_data.opp_id:
-        opp_rat = team_data.current_rating
-        return opp_rat
-  
-  def calc_elo_adj(self, team_rat, opp_rat, margin):
-    raw_perf = self.calc_raw_perf(margin)
-    pred_perf = self.calc_pred_perf(team_rat, opp_rat)
+  def calculate_ratings(self):
+    """
+    Where the rubber meets the road. Iterates through the team.sched_df and team_ratings_df to compile a final rating for the given week.
+    Stores final ratings in each team's obj (team.final_rating)
+    """
 
-    elo_adj = round((raw_perf - pred_perf) * 15, 12)
-    return elo_adj
+    for team in self.teams:
+      
+      for week in range(self.week + 1):
+        for y in range(5):
+          # Gather current ratings
+          team.sched_df.at[week, 'team_prev_rating'] = self.team_ratings_df.at[0, team.team_id]
+          if team.sched_df.isnull().values.any(): # Make sure there are no NaN values
+            team.sched_df.fillna(0, inplace=True)
+          team.sched_df.at[week, 'opp_rating'] = self.team_ratings_df.at[0, team.sched_df.at[week, 'opp_id']]
+          
+          # Calc Prdeicted performance, actual performance, and elo adj
+          team.sched_df['predicted_performance'] = 1 / (1 + (10 ** ((team.sched_df['opp_rating'] - team.sched_df['team_prev_rating']) / 30)))
+          team.sched_df['actual_performance'] = 1 / (1 + (10.0 ** (-team.sched_df['margin'] / 28)))
+          team.sched_df['elo_adj'] = (team.sched_df['actual_performance'] - team.sched_df['predicted_performance']) * 15
+          # Add elo adj to previous rating for resulting rating and Assign new rating to team rating dataframe
+          if team.sched_df.at[week, 'opp_id'] != 0:
+            team.sched_df.at[week, 'result_rating'] = team.sched_df.at[week, 'team_prev_rating'] + team.sched_df.at[week, 'elo_adj']
+            self.team_ratings_df.at[0, team.team_id] = team.sched_df.at[week, 'result_rating'] # Assign new rating to team rating dataframe
+          else:
+            team.sched_df.at[week, 'result_rating'] = team.sched_df.at[week, 'team_prev_rating']
 
-  def adj_rating(self, elo_adj, team_data):
-    team_data.current_rating = team_data.current_rating + elo_adj
-  
-  def calc_raw_perf(self, margin):
-    a = round(-margin / 28, 11)
-    b = round(10 ** a, 13)
-    c = round(1 + b, 13)
-    raw_perf = round(1 / c, 13)
-    return raw_perf
+    print(self.team_ratings_df)
 
-  def calc_pred_perf(self, team_rat, opp_rat):
-    a = round(opp_rat - team_rat / 28, 11)
-    b = round(a / 30, 13)
-    c = round(10 ** b, 13)
-    d = round(1 + c, 13)
-    pred_perf = round(1 / d, 13)
-    return pred_perf
+          
+
+  def _calc_elo_adjust(self, team, week):
+    """
+    team_rat, opp_rat, margin, loc
+    """
+    HOME_FIELD_ADV = 3.2142858
+    my_df = team.df
+
+    def actual_perf(margin, x):
+      data = 1 / (1 + (10 ** (-margin / 28)))
+      my_df['actual_perf'][week] = data
+      # return data
+
+    def predicted_perf(team_rat, opp_rat, loc):
+      data = 1 / (1 + (10 ** ((opp_rat - team_rat) / 30)))
+      if loc == 1:
+        data -= HOME_FIELD_ADV
+      elif loc == 0:
+        data += HOME_FIELD_ADV
+      my_df['predicted_perf'][week] = data
+      # return data
+    
+    def calc_elo_adj(actual_perf, predicted_perf):
+      elo_adj = (actual_perf - predicted_perf) * 15
+      return elo_adj
+
+
+
+test = CompileRatings(20, True)
+# for team in test.teams:
+#   print(team.final_rating)

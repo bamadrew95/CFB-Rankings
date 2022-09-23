@@ -4,8 +4,6 @@ from compileSchedules import CompileSchedules
 from checkScheduleIntegrity import ScheduleCheck
 from compileRatings import CompileRatings
 
-year = 1998
-
 ######################### RUN PROGRAM FILES #########################``
 # fetch_games = FetchGames()
 # fetch_teams = FetchTeams()

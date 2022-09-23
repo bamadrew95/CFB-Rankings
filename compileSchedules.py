@@ -122,7 +122,7 @@ class CompileSchedules:
     null_game = {
       'game_id': None,
       'week': x,
-      'opp_id': None,
+      'opp_id': 0,
       'opp': None,
       'team_score': None,
       'opp_score': None,
@@ -149,7 +149,7 @@ class CompileSchedules:
     null_game = {
       'game_id': None,
       'week': x,
-      'opp_id': None,
+      'opp_id': 0,
       'opp': None,
       'team_score': None,
       'opp_score': None,
