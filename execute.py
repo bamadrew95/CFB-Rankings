@@ -9,4 +9,4 @@ from compileRatings import CompileRatings
 # fetch_teams = FetchTeams()
 # compile_schedules = CompileSchedules()
 # check_schedules = ScheduleCheck()
-compile_ratings = CompileRatings(3, False) # arg1 = how many weeks to calc, arg2 = True to include postseason games
+compile_ratings = CompileRatings(16, True) # arg1 = how many weeks to calc, arg2 = True to include postseason games

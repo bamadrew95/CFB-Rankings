@@ -13,6 +13,7 @@ class CompileSchedules:
     self.open_files()
     self.initialize_team_schedule()
     self.find_active_teams()
+    self.add_null_team()
     self.correct_week_0()
     self.insert_bye_weeks()
     self.correct_season_length() 
@@ -174,6 +175,27 @@ class CompileSchedules:
         team_data['classification'] = 'unknown'
       if team_data['conference'] == None:
         team_data['conference'] = 'unknown'
+  
+  def add_null_team(self):
+    null_team = {}
+    null_team['id'] = 0
+    null_team['team'] = None
+    null_team['year'] = year
+    null_team['classification'] = 'unknown'
+    null_team['conference'] = 'unknown'
+    null_team['reg_game_data'] = [{
+      'game_id': None,
+      'week': 0,
+      'opp_id': 0,
+      'opp': None,
+      'team_score': None,
+      'opp_score': None,
+      'result': None,
+      'loc': None,
+      'season_type': 'regular'
+    }]
+    null_team['post_game_data'] = []
+    self.active_team_schedules.append(null_team)
   
   # Write data to JSON file
   def write_json(self):

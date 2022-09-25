@@ -934,5 +934,11 @@
         "team": "Saint Mary's (CA)",
         "classification": null,
         "conference": null
+    },
+    {
+        "id": 0,
+        "team": null,
+        "classification": null,
+        "conference": null
     }
 ]

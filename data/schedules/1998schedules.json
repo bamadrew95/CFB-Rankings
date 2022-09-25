@@ -29968,5 +29968,202 @@
             }
         ],
         "post_game_data": []
+    },
+    {
+        "id": 0,
+        "team": null,
+        "year": 1998,
+        "classification": null,
+        "conference": null,
+        "reg_game_data": [
+            {
+                "game_id": null,
+                "week": 0,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 1,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 2,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 3,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 4,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 5,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 6,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 7,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 8,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 9,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 10,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 11,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 12,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 13,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 14,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 15,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            },
+            {
+                "game_id": null,
+                "week": 16,
+                "opp_id": 0,
+                "opp": null,
+                "team_score": null,
+                "opp_score": null,
+                "result": null,
+                "loc": null,
+                "season_type": "regular"
+            }
+        ],
+        "post_game_data": []
     }
 ]

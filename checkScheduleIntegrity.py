@@ -6,12 +6,13 @@ class ScheduleCheck:
     """
     """
 
-    def __init__(self, year):
+    def __init__(self):
         """
         """
         # Schedules file
         f = open('data/schedules/' + str(year) + 'schedules.json')
         self.schedules_dict = json.load(f)
+        self.run()
     
     def run(self):
         """
@@ -50,9 +51,3 @@ class ScheduleCheck:
         Notifies the user how many teams are included.
         """
         print(f"{ len(self.schedules_dict) } schedules checked.")
-
-
-
-if __name__ == '__main__':
-    checks = ScheduleCheck(year)
-    checks.run()
