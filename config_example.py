@@ -2,7 +2,8 @@ from pathlib import Path
 import cfbd
 from cfbd.rest import ApiException
 import json
-from execute import year
+
+YEAR = 1998
 
 api_key = 'YOUR_API_KEY_HERE'
 
@@ -17,7 +18,7 @@ class CFBDApi():
     self.configuration = cfbd.Configuration()
     self.configuration.api_key['Authorization'] = api_key
     self.configuration.api_key_prefix['Authorization'] = 'Bearer'
-    self.year = year
+    self.year = YEAR
   
 ########################### BEGIN METHODS ###########################
 
@@ -72,22 +73,25 @@ class Team:
 
   # Assign inital rating if no past rating exists
   def assign_initial_rating(self):
-    prev_year = year - 1
+    prev_year = self.year - 1
+    self._assign_rating_by_classification()
     try:
-      f = open('data/ratings/' + str(prev_year) + 'ratings.json')
+      f = open('data/ratings/' + str(prev_year) + '/' + str(prev_year) + 'final_ratings.json')
       team_ratings_list = json.load(f)
-
-      for team_data in team_ratings_list:
-        if team_data['team_id'] == self.team_id:
-          self.initial_rating = team_data['final_rating']
+      for team in team_ratings_list:
+        if team['team_id'] == self.team_id:
+          self.initial_rating = team['rating']
     except:
-      if self.classification == 'fbs':
+      pass
+
+  def _assign_rating_by_classification(self):
+    if self.classification == 'fbs':
         self.initial_rating = float(50)
-      elif self.classification == 'fcs':
-        self.initial_rating = float(10)
-      elif self.classification == 'ii':
-        self.initial_rating = float(0)
-      elif self.classification == 'iii':
-        self.initial_rating = float(-10)
-      else:
-        self.initial_rating = float(0)
+    elif self.classification == 'fcs':
+      self.initial_rating = float(10)
+    elif self.classification == 'ii':
+      self.initial_rating = float(0)
+    elif self.classification == 'iii':
+      self.initial_rating = float(-10)
+    else:
+      self.initial_rating = float(0)

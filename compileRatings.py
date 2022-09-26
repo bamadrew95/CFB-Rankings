@@ -1,41 +1,51 @@
 import json
 import pandas as pd
 import numpy as np
-from config import year, Team, Game
+from config import YEAR, Team, Game
 from pprint import pprint
 from warnings import simplefilter
+simplefilter(action="ignore", category=pd.errors.PerformanceWarning) # Gets rid of warnings from pd about performance thrown by py.where
 
+year = YEAR
 
 class CompileRatings:
-  def __init__(self, week_to_calc, postseason):
+  def __init__(self, week_to_calc, iterations):
     # Define attributes
-    self.week = week_to_calc
-    self.post = postseason
+    self.iterations = iterations
     self.teams = []
 
     # Run methods
-    simplefilter(action="ignore", category=pd.errors.PerformanceWarning)
     self.open_files()
     self.create_teams()
+    self.set_week_num(week_to_calc)
     self.create_df()
-    # self.create_sched_df()
-    # self.create_ratings_df()
     self.calculate_ratings()
+    self.write_ratings_to_json()
 
 ###################### DEFINE METHODS ######################
   def open_files(self):
     f = open('data/schedules/' + str(year) + 'schedules.json')
     self.teams_json_data = json.load(f)
 
+  def set_week_num(self, week_to_calc):
+    self.weeks_in_season = len(self.teams_json_data[0]['reg_game_data']) + len(self.teams_json_data[0]['post_game_data'])
+    if week_to_calc == 'all':
+      self.week = self.weeks_in_season
+    elif week_to_calc > self.weeks_in_season:
+      raise ValueError('There are only ' + str(self.weeks_in_season) + ' weeks in this year\'s season. Try a smaller week number or put \'all\' to calculate the entire season.')
+    else:
+      self.week = week_to_calc
+    
 # Instantiate teams
   def create_teams(self):
     for team_data in self.teams_json_data:
-      team_schedule = self.create_schedule(team_data)
+      team_schedule = self._create_schedule(team_data)
       team = Team(team_data['id'], team_data['team'], team_data['classification'], team_data['conference'], team_schedule)
+      team.rating_results = []
       self.teams.append(team)
 
-    # Compile list of game objs for each team schudule
-  def create_schedule(self, team_data):
+    # Compile list of game objs for each team's schedule
+  def _create_schedule(self, team_data):
     team_schedule = []
     reg_season_games = team_data['reg_game_data']
     post_season_games = team_data['post_game_data']
@@ -60,13 +70,15 @@ class CompileRatings:
       team_data['team_rating'] = team.initial_rating
       team_data['wins'] = 0
       team_data['losses'] = 0
+      team_data['games_played'] = 0
       # Build data for each week in corresponding labels
-      for week in range(self.week + 1):
+      for week in range(self.week):
         week_label = 'week' + str(week) + '_'
         team_data[week_label + 'opp_id'] = team.sched[week].opp_id
         team_data[week_label + 'opp'] = team.sched[week].opp
         team_data[week_label + 'team_score'] = team.sched[week].team_score
         team_data[week_label + 'opp_score'] = team.sched[week].opp_score
+        team_data[week_label + 'result'] = team.sched[week].game_result
         team_data[week_label + 'season_type'] = team.sched[week].season_type
         if team.sched[week].location == 1:
           team_data[week_label + 'home_adv'] = -3.2142858
@@ -79,13 +91,15 @@ class CompileRatings:
     self.df = pd.DataFrame(year_data)
     self.df.set_index('team_id', inplace=True)
 
-    for week in range(self.week + 1):
+    for week in range(self.week):
       week_label = 'week' + str(week) + '_'
       self.df[week_label + 'bye'] = np.where(self.df[week_label + 'opp_id'] == 0, True, False)
       self.df[week_label + 'margin'] = self.df[week_label + 'team_score'] - self.df[week_label + 'opp_score']
 
   def calculate_ratings(self):
-    for week in range(self.week + 1):
+    self.ratings_list = []
+    for week in range(self.week):
+      week_ratings = []
       week_label = 'week' + str(week) + '_'
       # Everything done once at the beginning of week
       self.df[week_label + 'team_rating'] = self.df['team_rating']
@@ -95,18 +109,44 @@ class CompileRatings:
         self.df.at[team.team_id, week_label + 'opp_rating'] = self.df._get_value(opp_id, 'team_rating')
       
       # Everything iterated through 100 times per week
-      for x in range(100):
+      for x in range(self.iterations):
 
         # Predicted Performance
-        self.df[week_label + 'pred_perf'] = 1 / (1 + (10 ** (((self.df[week_label + 'opp_rating'] + self.df[week_label + 'home_adv']) - self.df[week_label + 'team_rating']) / 30)))
+        self.df[week_label + 'pred_perf'] = 1 / (1 + (10 ** (((self.df[week_label + 'opp_rating'] + self.df[week_label + 'home_adv']) - self.df[week_label + 'team_rating']) / 42)))
         # Actual Performance
-        self.df[week_label + 'actual_perf'] = 1 / (1 + (10 ** (-self.df[week_label + 'margin'] / 28)))
+        self.df[week_label + 'actual_perf'] = 1 / (1 + (10 ** (-self.df[week_label + 'margin'] / 42)))
         # Elo Adjustment
-        self.df[week_label + 'elo_adj'] = np.where(self.df[week_label + 'bye'], 0, (self.df[week_label + 'actual_perf'] - self.df[week_label + 'pred_perf']) * 15)
+        self.df[week_label + 'elo_adj'] = np.where(self.df[week_label + 'bye'], 0, (self.df[week_label + 'actual_perf'] - self.df[week_label + 'pred_perf']) * 10)
         # Adjust ratings
         self.df[week_label + 'team_rating'] = self.df[week_label + 'team_rating'] + self.df[week_label + 'elo_adj']
         self.df[week_label + 'opp_rating'] = self.df[week_label + 'opp_rating'] - self.df[week_label + 'elo_adj']
         # Assign new rating as team_rating
         self.df['team_rating'] = self.df[week_label + 'team_rating']
-
-# test = CompileRatings(16, True)
+      
+      # Store week results in dict
+      week_ratings = self.df['team_rating'].to_dict()
+      # Run function to assign these rating to team objects
+      for team in self.teams:
+        team.rating_results.append(week_ratings[team.team_id])
+    
+  def write_ratings_to_json(self):
+    for week in range(self.week):
+      week_label = 'week' + str(week) + '_rating'
+      week_rating_data = []
+      for team in self.teams:
+        team_dict = {}
+        team_dict['team_id'] = team.team_id
+        team_dict['team'] = team.team
+        team_dict['rating'] = team.rating_results[week]
+        team_dict['classification'] = team.classification
+        team_dict['conference'] = team.conf
+        week_rating_data.append(team_dict)
+      
+       # Write data to JSON file
+      json_object = json.dumps(week_rating_data, indent=4)
+      if week < 20:
+        with open('data/ratings/' + str(year) + '/week' + str(week) + '_ratings.json', 'w') as outfile:
+          outfile.write(json_object)
+      else:
+        with open('data/ratings/' + str(year) + '/' + str(year) + 'final_ratings.json', 'w') as outfile:
+          outfile.write(json_object)

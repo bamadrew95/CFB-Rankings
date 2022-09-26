@@ -1,6 +1,7 @@
 import json
-from config import year, PROJECT_PATH
+from config import YEAR, PROJECT_PATH
 
+year = YEAR
 
 class ScheduleCheck:
     """

@@ -1,6 +1,7 @@
-from config import CFBDApi
+from config import CFBDApi, YEAR
 import json
-from config import year
+
+year = YEAR
 
 class FetchTeams:
   def __init__(self):

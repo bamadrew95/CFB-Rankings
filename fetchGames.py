@@ -1,5 +1,7 @@
-from config import year, CFBDApi
+from config import CFBDApi, YEAR
 import json
+
+year = YEAR
 
 ##################### DEFINE CLASS #####################
 class FetchGames:

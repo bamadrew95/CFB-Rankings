@@ -1,6 +1,8 @@
+from config import YEAR
 import json
 import xlsxwriter
-from config import year
+
+year = YEAR
 
 class CompileSchedules:
   def __init__(self):
@@ -16,7 +18,8 @@ class CompileSchedules:
     self.add_null_team()
     self.correct_week_0()
     self.insert_bye_weeks()
-    self.correct_season_length() 
+    self.correct_reg_season_length()
+    self.correct_post_season_length()
     self.define_null_conf()
     self.write_json()
     # self.write_xlsx() ############# Uncomment this to write data to XLSX format #############
@@ -119,7 +122,7 @@ class CompileSchedules:
       except:
         continue
   
-  def check_week(self, x, team_data):
+  def _check_week(self, x, team_data):
     null_game = {
       'game_id': None,
       'week': x,
@@ -142,11 +145,11 @@ class CompileSchedules:
     for team_data in self.active_team_schedules:
       x = 0
       while x < 20:
-        self.check_week(x, team_data)
+        self._check_week(x, team_data)
         x += 1
 
   # Append NULL game to end of season
-  def append_game(self, x, team_data):
+  def _append_reg_game(self, x, team_data):
     null_game = {
       'game_id': None,
       'week': x,
@@ -160,13 +163,38 @@ class CompileSchedules:
     }
     team_data['reg_game_data'].append(null_game)
 
-  # Add NULL games up to make every teams' regular season 16 games long
-  def correct_season_length(self):
+  # Add NULL games up to make every teams' regular season 16 games long and post season 4 games long
+  def correct_reg_season_length(self):
+    max_reg_season_length = 17
     for team_data in self.active_team_schedules:
-      season_length = len(team_data['reg_game_data'])
-      if season_length < 17:
-        for i in range(season_length, 17):
-          self.append_game(i, team_data)
+      reg_season_length = len(team_data['reg_game_data'])
+      if reg_season_length < max_reg_season_length:
+        for i in range(reg_season_length, max_reg_season_length):
+          self._append_reg_game(i, team_data)
+
+  # Append NULL game to end of season
+  def _append_post_game(self, team_data):
+    null_game = {
+      'game_id': None,
+      'week': 1,
+      'opp_id': 0,
+      'opp': None,
+      'team_score': None,
+      'opp_score': None,
+      'result': None,
+      'loc': None,
+      'season_type': 'postseason'
+    }
+    team_data['post_game_data'].append(null_game)
+
+  # Add NULL games up to make every teams' regular season 16 games long and post season 4 games long
+  def correct_post_season_length(self):
+    max_season_length = 4
+    for team_data in self.active_team_schedules:
+      season_length = len(team_data['post_game_data'])
+      if season_length < max_season_length:
+        for i in range(season_length, max_season_length):
+          self._append_post_game(team_data)
   
   # Assign NULL conference dict keys the value 'unknown'
   def define_null_conf(self):
