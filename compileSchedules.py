@@ -1,20 +1,23 @@
-from config import YEAR
+from config import Game
 import json
 import xlsxwriter
 
-year = YEAR
-
 class CompileSchedules:
-  def __init__(self):
+  def __init__(self, YEAR):
     # Define attributes
+    self.year = YEAR
     self.all_team_schedules = [] # Used to hold list of all teams' schedules, active or inactive
     self.teams = [] # Used in filtering FBS teams
     self.games = [] # Used in compiling game data for each team
 
     # Run methods
+    print('Compiling schedules...')
     self.open_files()
+    self.filter_duplicate_team_games()
     self.initialize_team_schedule()
     self.find_active_teams()
+    self.delete_duplicate_games()
+    self.correct_duplicate_weeks()
     self.add_null_team()
     self.correct_week_0()
     self.insert_bye_weeks()
@@ -23,15 +26,24 @@ class CompileSchedules:
     self.define_null_conf()
     self.write_json()
     # self.write_xlsx() ############# Uncomment this to write data to XLSX format #############
+    self.completion_message()
+
 
 ########################### BEGIN METHODS ###########################
 
   def open_files(self):
-    f = open('data/teams/' + str(year) + 'teams.json')
+    f = open('data/teams/' + str(self.year) + 'teams.json')
     self.teams_dict = json.load(f)
 
-    f = open('data/games/' + str(year) + 'games.json')
+    f = open('data/games/' + str(self.year) + 'games.json')
     self.games_dict = json.load(f)
+  
+  def filter_duplicate_team_games(self):
+    duplicate_team_ids = [2519, 1000899]
+    for game in self.games_dict:
+      for id in duplicate_team_ids:
+        if game['_home_id'] == id or game['_away_id'] == id:
+          self.games_dict.remove(game)
 
   # 1 = win, 0 = loss, tie = 0.5
   def eval_game_result(self, home, game_data):
@@ -71,7 +83,7 @@ class CompileSchedules:
       team_data = {}
       team_data['id'] = team['id']
       team_data['team'] = team['team']
-      team_data['year'] = year
+      team_data['year'] = self.year
       team_data['classification'] = team['classification']
       team_data['conference'] = team['conference']
       team_data['reg_game_data'] = []
@@ -111,7 +123,44 @@ class CompileSchedules:
     for sched in self.all_team_schedules:
       if sched['reg_game_data'] != []:
         self.active_team_schedules.append(sched)
-  
+
+  def delete_duplicate_games(self):
+    prev_game = Game(0, 0, 0, 'test', 0, 0, 0, 0.5, 'regular')
+    for x in range(6):
+      for team in self.active_team_schedules:
+        for game in team['reg_game_data']:
+          if prev_game.week == game['week'] and prev_game.opp_id == game['opp_id'] and prev_game.opp == game['opp'] and prev_game.team_score == game['team_score'] and prev_game.opp_score == game['opp_score']:
+            team['reg_game_data'].remove(game)
+          else:
+            prev_game.week = game['week']
+            prev_game.opp_id = game['opp_id']
+            prev_game.opp = game['opp']
+            prev_game.team_score = game['team_score']
+            prev_game.opp_score = game['opp_score']
+
+  def correct_duplicate_weeks(self):
+    for team in self.active_team_schedules:
+      for i in range(len(team['reg_game_data'])):
+        prev_week_index = i - 1
+        current_week_index = i
+        next_week_index = i + 1
+        if prev_week_index == -1:
+          prev_week = None
+        else:
+          prev_week = team['reg_game_data'][prev_week_index]['week']
+        current_week = team['reg_game_data'][current_week_index]['week']
+        try:
+          next_week = team['reg_game_data'][next_week_index]['week']
+        except IndexError:
+          next_week = None
+      
+        if prev_week and next_week:
+          if current_week == next_week:
+            if prev_week == current_week - 2:
+              team['reg_game_data'][current_week_index]['week'] = current_week - 1
+            elif prev_week == current_week - 1:
+              team['reg_game_data'][next_week_index]['week'] = current_week + 1
+
   # Ensure week 0 games display correctly
   def correct_week_0(self):    
     
@@ -208,7 +257,7 @@ class CompileSchedules:
     null_team = {}
     null_team['id'] = 0
     null_team['team'] = None
-    null_team['year'] = year
+    null_team['year'] = self.year
     null_team['classification'] = 'unknown'
     null_team['conference'] = 'unknown'
     null_team['reg_game_data'] = [{
@@ -229,12 +278,12 @@ class CompileSchedules:
   def write_json(self):
     json_object = json.dumps(self.active_team_schedules, indent=4)
 
-    with open('data/schedules/' + str(year) + 'schedules.json', 'w') as outfile:
+    with open('data/schedules/' + str(self.year) + 'schedules.json', 'w') as outfile:
       outfile.write(json_object)
   
   def write_xlsx(self):
     # Open JSON file
-    f = open('data/schedules/' + str(year) + 'schedules.json')
+    f = open('data/schedules/' + str(self.year) + 'schedules.json')
     schedules_dict = json.load(f)
 
     # Prep data for XLS
@@ -269,7 +318,7 @@ class CompileSchedules:
 
     XLS_team_data.insert(0, xls_columns)
     
-    workbook = xlsxwriter.Workbook('data/excel/' + str(year) + 'data.xlsx')
+    workbook = xlsxwriter.Workbook('data/excel/' + str(self.year) + 'data.xlsx')
     worksheet = workbook.add_worksheet()
     row = 0
 
@@ -281,3 +330,6 @@ class CompileSchedules:
       row += 1
 
     workbook.close()
+
+  def completion_message(self):
+    print('Schedules compiled successfully.')

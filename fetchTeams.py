@@ -1,22 +1,23 @@
-from config import CFBDApi, YEAR
+from config import CFBDApi
 import json
 
-year = YEAR
-
 class FetchTeams:
-  def __init__(self):
+  def __init__(self, YEAR):
+    self.year = YEAR
+    print('Initiating Teams API call...')
     self.api_call()
     self.open_games_file()
     self.create_teams_list()
     self.write_json()
+    self.completion_message()
 
 ########################### BEGIN METHODS ###########################
 
   def api_call(self):
-    self.team_data = CFBDApi().teams()
+    self.team_data = CFBDApi(self.year).teams()
   
   def open_games_file(self):
-    f = open('data/games/' + str(year) + 'games.json')
+    f = open('data/games/' + str(self.year) + 'games.json')
     self.game_data = json.load(f)
 
   def create_teams_list(self):
@@ -43,5 +44,8 @@ class FetchTeams:
   def write_json(self):
     json_object = json.dumps(self.team_dict_list, indent=4)
 
-    with open('data/teams/' + str(year) + 'teams.json', 'w') as outfile:
+    with open('data/teams/' + str(self.year) + 'teams.json', 'w') as outfile:
       outfile.write(json_object)
+  
+  def completion_message(self):
+    print('FetchGames module completed successfully.')

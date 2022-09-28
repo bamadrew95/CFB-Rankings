@@ -1,30 +1,31 @@
 import json
 import pandas as pd
 import numpy as np
-from config import YEAR, Team, Game
+from config import Team, Game
 from pprint import pprint
 from warnings import simplefilter
 simplefilter(action="ignore", category=pd.errors.PerformanceWarning) # Gets rid of warnings from pd about performance thrown by py.where
 
-year = YEAR
-
 class CompileRatings:
-  def __init__(self, week_to_calc, iterations):
+  def __init__(self, YEAR, week_to_calc, iterations):
     # Define attributes
+    self.year = YEAR
     self.iterations = iterations
     self.teams = []
 
     # Run methods
+    print(f'Calculating ratings for { self.year }...')
     self.open_files()
     self.create_teams()
     self.set_week_num(week_to_calc)
     self.create_df()
     self.calculate_ratings()
     self.write_ratings_to_json()
+    self.completion_message()
 
 ###################### DEFINE METHODS ######################
   def open_files(self):
-    f = open('data/schedules/' + str(year) + 'schedules.json')
+    f = open('data/schedules/' + str(self.year) + 'schedules.json')
     self.teams_json_data = json.load(f)
 
   def set_week_num(self, week_to_calc):
@@ -40,7 +41,7 @@ class CompileRatings:
   def create_teams(self):
     for team_data in self.teams_json_data:
       team_schedule = self._create_schedule(team_data)
-      team = Team(team_data['id'], team_data['team'], team_data['classification'], team_data['conference'], team_schedule)
+      team = Team(team_data['id'], team_data['team'], team_data['classification'], team_data['conference'], team_schedule, self.year)
       team.rating_results = []
       self.teams.append(team)
 
@@ -145,8 +146,11 @@ class CompileRatings:
        # Write data to JSON file
       json_object = json.dumps(week_rating_data, indent=4)
       if week < 20:
-        with open('data/ratings/' + str(year) + '/week' + str(week) + '_ratings.json', 'w') as outfile:
+        with open('data/ratings/' + str(self.year) + '/week' + str(week) + '_ratings.json', 'w') as outfile:
           outfile.write(json_object)
       else:
-        with open('data/ratings/' + str(year) + '/' + str(year) + 'final_ratings.json', 'w') as outfile:
+        with open('data/ratings/' + str(self.year) + '/' + str(self.year) + 'final_ratings.json', 'w') as outfile:
           outfile.write(json_object)
+
+  def completion_message(self):
+    print(f'Ratings for the year { self.year } have been successfully compiled!')

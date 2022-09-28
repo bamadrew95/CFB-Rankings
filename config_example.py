@@ -3,8 +3,6 @@ import cfbd
 from cfbd.rest import ApiException
 import json
 
-YEAR = 1998
-
 api_key = 'YOUR_API_KEY_HERE'
 
 PROJECT_PATH = Path(Path.cwd())
@@ -14,7 +12,7 @@ PROJECT_PATH = Path(Path.cwd())
 class CFBDApi():
   """
   """
-  def __init__(self):
+  def __init__(self, YEAR):
     self.configuration = cfbd.Configuration()
     self.configuration.api_key['Authorization'] = api_key
     self.configuration.api_key_prefix['Authorization'] = 'Bearer'
@@ -48,6 +46,10 @@ class CFBDApi():
     except ApiException as e:
       print("Error accessing TeamsApi->get_teams: %s\n" % e)
 
+#########################################################################################
+# Define Game class
+#########################################################################################
+
 class Game:
   def __init__(self, game_id, week, opp_id, opp, team_score, opp_score, game_result, location, season_type):
     self.game_id = game_id
@@ -59,6 +61,10 @@ class Game:
     self.game_result = game_result
     self.location = location
     self.season_type = season_type
+
+#########################################################################################
+# Define Team class
+#########################################################################################
 
 class Team:
   def __init__(self, team_id, team, classification, conf, sched):

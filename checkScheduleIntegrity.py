@@ -1,26 +1,30 @@
 import json
-from config import YEAR, PROJECT_PATH
-
-year = YEAR
 
 class ScheduleCheck:
     """
     """
 
-    def __init__(self):
+    def __init__(self, YEAR):
         """
         """
-        # Schedules file
-        f = open('data/schedules/' + str(year) + 'schedules.json')
-        self.schedules_dict = json.load(f)
+        self.year = YEAR
+        self.error = 0
         self.run()
+        
     
     def run(self):
         """
         """
+        print(f'Checking schedule integrity for { self.year }...')
+        self.open_file()
         self.check_week_increments()
         self.check_season_lengths()
-        self.print_number_of_team()
+        self.check_for_errors()
+        self.completion_message()
+
+    def open_file(self):
+        f = open('data/schedules/' + str(self.year) + 'schedules.json')
+        self.schedules_dict = json.load(f)
     
     def check_week_increments(self):
         """
@@ -29,26 +33,24 @@ class ScheduleCheck:
         for team in self.schedules_dict:
             counter = 0
             for game in team['reg_game_data']:
-                try:
-                    assert(game['week'] == counter)
-                except AssertionError:
+                if game['week'] != counter:
                     print(f"Error on { team['team'] }'s schedule at week { counter }.")
+                    self.error += 1
                 counter += 1
     
     def check_season_lengths(self):
         """
-        Checks len 
+        Checks schedule length and compares with first team's schedule length
         """
         length = len(self.schedules_dict[0]['reg_game_data'])
 
         for team in self.schedules_dict:
-            try:
-                assert(length == len(team['reg_game_data']))
-            except AssertionError:
+            if length != len(team['reg_game_data']):
                 print(f"Error with {team['team']}'s season length. They have { len(team['reg_game_data']) } games listed.")
+                self.error += 1
     
-    def print_number_of_team(self):
-        """
-        Notifies the user how many teams are included.
-        """
-        print(f"{ len(self.schedules_dict) } schedules checked.")
+    def check_for_errors(self):
+        assert self.error == 0, str(self.error) + ' schedule error(s) found.'
+
+    def completion_message(self):
+        print(f"{ len(self.schedules_dict) } schedules checked. No errors found.")
